@@ -1,0 +1,6 @@
+# Ignore sensitive files
+.env
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
