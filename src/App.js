@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./home";
+import Quiz from "./Quiz";
+import About from "./about";
+import Navbar from "./navbar";
+import Profile from "./Profile";
+import Dashboard from "./Dashboard";
+import UsernamePrompt from "./UsernamePrompt";
+import LearningJourney from "./LearningJourney"; // Import the new component
+import "./index.css";
 
 function App() {
+  const [username, setUsername] = useState(localStorage.getItem("username"));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {!username && <UsernamePrompt setUsername={setUsername} />}
+      <Routes>
+        <Route path="/" element={<Home username={username} />} />
+        <Route path="/quiz/:skill" element={<Quiz username={username} />} />
+        <Route path="/learning-journey/:skill" element={<LearningJourney username={username} />} /> {/* New route */}
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile username={username} />} />
+        <Route path="/dashboard" element={<Dashboard username={username} />} />
+      </Routes>
+    </Router>
   );
 }
 
